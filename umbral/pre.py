@@ -176,8 +176,9 @@ class Capsule(object):
 
         return s * g == v + (h * e)
 
-    def attach_cfrag(self, cfrag: CapsuleFrag) -> None:
-        if cfrag.verify_correctness(self):
+    def attach_cfrag(self, cfrag: CapsuleFrag, check_correctness=True) -> None:
+        is_correct = not check_correctness or cfrag.verify_correctness(self)
+        if is_correct:
             self._attached_cfrags.append(cfrag)
         else:
             error_msg = "CFrag is not correct and cannot be attached to the Capsule"
